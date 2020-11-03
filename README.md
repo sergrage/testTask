@@ -8,4 +8,4 @@ npm i
 
 npm run dev
 
-php artisan server
+php artisan serve
