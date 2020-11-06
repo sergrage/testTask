@@ -10,8 +10,17 @@ use Validator;
 use App\Models\Article;
 use App\Models\Comment;
 
+use App\Services\CommentService;
+
 class CommentController extends Controller
 {
+    private $service;
+
+    public function __construct(CommentService $service)
+    {
+        $this->service = $service;
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -21,11 +30,7 @@ class CommentController extends Controller
 
         if ($validator->passes()) {
 
-            $comment = Comment::create([
-                'title'  =>  $request['commentTitle'],
-                'body' =>  $request['commentBody'],
-                'article_id' => $request['commentId']
-            ]);
+            $this->service->addComment($request);
 
             return "<div class='alert alert-success' role='alert'>
                   Комментарий успешно отправлен!
@@ -37,4 +42,15 @@ class CommentController extends Controller
 
         
     }
+
+    // public function store(CommentRequest $request)
+    // {
+    //     try {
+
+
+
+    //     } catch(ValidationException $e) {
+    //         return response()->json(['error'=>$validator->errors()]);
+    //     }
+    // }
 }

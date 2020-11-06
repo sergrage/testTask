@@ -6,8 +6,16 @@ use Illuminate\Http\Request;
 use App\Models\Article;
 use Illuminate\Support\Facades\DB;
 
+use App\Services\ArticleService;
+
 class ArticleController extends Controller
 {
+    private $service;
+
+    public function __construct(ArticleService $service)
+    {
+        $this->service = $service;
+    }
 
 	public function index()
 	{
@@ -25,22 +33,16 @@ class ArticleController extends Controller
 
     public function addLike(Request $request)
     {
-    	$id = $request['commentId'];
-    	$article = Article::find($id);
+    	$likes = $this->service->addLike($request);
 
-    	$article->increment('likes');
-
-    	return "<i class='far fa-thumbs-up'></i> " . $article->likes;
+    	return "<i class='far fa-thumbs-up'></i> " . $likes;
     }
 
     public function viewsIncrement(Request $request)
     {
-    	$id = $request['commentId'];
-    	$article = Article::find($id);
+    	$views = $this->service->viewsInc($request);
 
-    	$article->increment('views');
-
-    	return "<i class='fas fa-eye'></i> " . $article->views;
+    	return "<i class='fas fa-eye'></i> " . $views;
     }
 
     

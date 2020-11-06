@@ -28,4 +28,9 @@ class CommentRequest extends FormRequest
             'body'  =>  'required|min:10',
         ];
     }
+
+    public function response(array $errors)
+    {
+        return parent::response($errors);
+    }
 }

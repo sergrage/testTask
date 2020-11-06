@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\Redis;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,6 +13,18 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('articles/test/{$id}', function($id){
+	Redis::set('visits.{$id}.downlods', 0);
+	// Redis::incr('visits');
+	Redis::incrBy('visits.{$id}.downlods', 5);
+	
+	$visits = Redis::get('visits.{$id}.downlods');
+
+	return $visits;
+
+});
+
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 

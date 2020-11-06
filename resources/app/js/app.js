@@ -2,18 +2,21 @@ require('./bootstrap');
 global.jquery = global.jQuery = global.$ = require('jquery');
 
 
+
 $('#addComment').click(function(event){
 	event.preventDefault();
 	let commentTitle = $('#commentTitle').val();
 	let commentBody = $('#commentBody').val();
-	let commentId = $('#commentId').val();
+	// let commentId = $('#commentId').val();
+    let articleId = $('.card-title').data('id');
+
     $.ajax({
         url: "/articles/newComment",
         type: "POST",
         data:{
         	"commentTitle":  commentTitle,
         	"commentBody":  commentBody,
-        	"commentId":  commentId
+        	"articleId":  articleId
 		},
 		headers:{
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -30,8 +33,9 @@ $('#addComment').click(function(event){
             // $('.addComment').html(data);
             // $('#uploaded_image').html(data);
         },
-        error: function(){
-        	alert('Что-то пошло не так');
+        error: function(data){
+        	let errors = data.responseJSON;
+            console.log(errors);
         }
     });
 });
@@ -45,23 +49,28 @@ function printErrorMsg (msg) {
 }
 
 $('#likesNumber').click(function(e){
-	let commentId = $('#commentId').val();
+	let articleId = $('.card-title').data('id');
+    console.log(articleId);
     $.ajax({
-    url: "/articles/addLike",
-    type: "POST",
-    data:{
-    	"commentId":  commentId
-	},
-	headers:{
-		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	},
-    success: function(data)
-    {	
-        $('#likesNumber').html(data);
-    },
-    error: function(){
-    	alert('Что-то пошло не так');
-    }
-});
+        url: "/articles/addLike",
+        type: "POST",
+        data:{
+        	"articleId": articleId
+    	},
+    	headers:{
+    		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    	},
+        success: function(data)
+        {	
+            $('#likesNumber').html(data);
+        },
+        error: function(){
+        	alert('Что-то пошло не так likesNumber');
+        }
+    });
 
 });
+
+
+
+//////////////////////////////////

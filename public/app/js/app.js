@@ -30220,15 +30220,16 @@ global.jquery = global.jQuery = global.$ = __webpack_require__(/*! jquery */ "./
 $('#addComment').click(function (event) {
   event.preventDefault();
   var commentTitle = $('#commentTitle').val();
-  var commentBody = $('#commentBody').val();
-  var commentId = $('#commentId').val();
+  var commentBody = $('#commentBody').val(); // let commentId = $('#commentId').val();
+
+  var articleId = $('.card-title').data('id');
   $.ajax({
     url: "/articles/newComment",
     type: "POST",
     data: {
       "commentTitle": commentTitle,
       "commentBody": commentBody,
-      "commentId": commentId
+      "articleId": articleId
     },
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -30245,8 +30246,9 @@ $('#addComment').click(function (event) {
       console.log(data); // $('.addComment').html(data);
       // $('#uploaded_image').html(data);
     },
-    error: function error() {
-      alert('Что-то пошло не так');
+    error: function error(data) {
+      var errors = data.responseJSON;
+      console.log(errors);
     }
   });
 });
@@ -30260,12 +30262,13 @@ function printErrorMsg(msg) {
 }
 
 $('#likesNumber').click(function (e) {
-  var commentId = $('#commentId').val();
+  var articleId = $('.card-title').data('id');
+  console.log(articleId);
   $.ajax({
     url: "/articles/addLike",
     type: "POST",
     data: {
-      "commentId": commentId
+      "articleId": articleId
     },
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -30274,10 +30277,10 @@ $('#likesNumber').click(function (e) {
       $('#likesNumber').html(data);
     },
     error: function error() {
-      alert('Что-то пошло не так');
+      alert('Что-то пошло не так likesNumber');
     }
   });
-});
+}); //////////////////////////////////
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),

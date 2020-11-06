@@ -41,9 +41,9 @@ class ApiComment implements ShouldQueue
     {
         // throw new \Exception("error", 101);
 
-        info($this->title);
-        info($this->body);
-        info($this->article_id);
+        // info($this->title);
+        // info($this->body);
+        // info($this->article_id);
 
         $comment = Comment::create([
             'title'   => $this->title,
