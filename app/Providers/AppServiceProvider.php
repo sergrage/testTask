@@ -5,6 +5,9 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 
+use App\Services\Repositories\ArticleRepositoryInterface;
+use App\Services\Repositories\ArticleRepository;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -14,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->registerBindings();
     }
 
     /**
@@ -25,5 +28,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Paginator::useBootstrap();
+    }
+
+
+    public function registerBindings()
+    {
+        $this->app->bind(
+            ArticleRepositoryInterface::class,
+            ArticleRepository::class
+        );
     }
 }

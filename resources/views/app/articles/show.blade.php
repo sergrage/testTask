@@ -22,7 +22,7 @@
 </div>
 </div>
 <hr>
-<form class="addComment" method="POST" action="{{route('comment.store', $article->slug)}}">
+<form class="addComment" method="POST" action="{{route('comment.store')}}">
 	 @csrf 
   <div class="form-group">
     <label>Тема комментария</label>

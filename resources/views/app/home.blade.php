@@ -19,8 +19,8 @@
 	  </div>
 	  <div class="card-footer text-muted">
 	  	Просмотры \ Лайки:
-	    <span class="badge badge-primary"><i class="fas fa-eye"></i> {{$article->views}}</span>
-  		<span class="badge badge-success"><i class="far fa-thumbs-up"></i> {{$article->likes}}</span>
+	    <span class="badge badge-primary"><i class="fas fa-eye"></i>{{$article->views}} </span>
+  		<span class="badge badge-success"><i class="far fa-thumbs-up"></i>{{$article->likes}} </span>
 	  </div>
 	  <div class="mt-4">
 	  	Теги:
